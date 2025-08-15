@@ -1,4 +1,4 @@
-package com.kaku.data.repository
+package com.kaku.data.data.repository
 
 import com.kaku.domain.repositories.MyRepository
 

@@ -53,6 +53,8 @@ dependencies {
 
     implementation(libs.hilt)
     ksp(libs.hilt.compiler)
+    // hiltViewModel
+    implementation(libs.hilt.navigation)
 
     testImplementation(libs.junit)
 

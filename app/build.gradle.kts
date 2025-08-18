@@ -45,6 +45,7 @@ android {
 dependencies {
     implementation(project(":ui"))
     implementation(project(":data")) // for di
+    implementation(project(":network")) // for di
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

@@ -52,7 +52,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           tag_name: v${{ env.VERSION_NAME }}
-          release_name: "Release v${{ env.VERSION_NAME }}"
+          name: "Release v${{ env.VERSION_NAME }}"
           files: |
             app/build/outputs/apk/release/*.apk
         env:

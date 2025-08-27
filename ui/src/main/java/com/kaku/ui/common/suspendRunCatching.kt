@@ -1,17 +1,13 @@
 package com.kaku.ui.common
 
-import android.util.Log
+import timber.log.Timber
 import kotlin.coroutines.cancellation.CancellationException
 
-suspend fun <T> suspendRunCatching(block: suspend () -> T): Result<T> = try {
+suspend inline fun <T> suspendRunCatching(block: suspend () -> T): Result<T> = try {
     Result.success(block())
 } catch (cancellationException: CancellationException) {
     throw cancellationException
 } catch (exception: Exception) {
-    Log.i(
-        "suspendRunCatching",
-        "Failed to evaluate a suspendRunCatchingBlock. Returning failure Result",
-        exception,
-    )
+    Timber.i( "Returning failure Result")
     Result.failure(exception)
 }

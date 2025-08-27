@@ -57,6 +57,8 @@ dependencies {
     // hiltViewModel
     implementation(libs.hilt.navigation)
 
+    implementation(libs.timber)
+
     testImplementation(libs.junit)
 
     androidTestImplementation(libs.androidx.junit)

@@ -50,6 +50,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.ui.tooling) // Compose Preview etc.
 
     implementation(libs.hilt)
     ksp(libs.hilt.compiler)

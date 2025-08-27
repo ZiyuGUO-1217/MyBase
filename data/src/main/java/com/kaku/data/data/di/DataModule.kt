@@ -1,7 +1,9 @@
 package com.kaku.data.data.di
 
 import com.kaku.data.data.repository.DefaultMyRepository
+import com.kaku.data.data.repository.MyRestfulRepository
 import com.kaku.domain.repositories.MyRepository
+import com.kaku.domain.repositories.RestfulRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -17,4 +19,10 @@ abstract class DataModule {
     abstract fun bindMyRepository(
         repository: DefaultMyRepository,
     ): MyRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindRestfulRepository(
+        repository: MyRestfulRepository,
+    ): RestfulRepository
 }

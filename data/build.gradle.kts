@@ -37,9 +37,12 @@ android {
 
 dependencies {
     implementation(project(":domain"))
+    implementation(project(":network"))
 
     implementation(libs.hilt)
     ksp(libs.hilt.compiler)
+
+    ksp(libs.moshi.codegen) // for @JsonClass(generateAdapter = true)
 
     testImplementation(libs.junit)
 }

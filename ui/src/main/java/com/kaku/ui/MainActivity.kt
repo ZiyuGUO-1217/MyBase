@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.kaku.ui.screen.home.HomeScreen
+import com.kaku.ui.screen.restful.RestfulScreen
 import com.kaku.ui.theme.MyBaseTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -15,7 +15,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MyBaseTheme {
-                HomeScreen()
+                RestfulScreen()
             }
         }
     }

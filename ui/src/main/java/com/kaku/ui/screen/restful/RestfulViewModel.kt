@@ -7,6 +7,7 @@ import com.kaku.ui.common.MviViewModel
 import com.kaku.ui.common.UiAction
 import com.kaku.ui.common.UiEffect
 import com.kaku.ui.common.UiState
+import com.kaku.ui.common.UiStates
 import com.kaku.ui.common.suspendRunCatching
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -28,20 +29,22 @@ class RestfulViewModel @Inject constructor(
     }
 
     private fun loadData() {
+        updateUiState { copy(items = UiStates.Loading) }
         viewModelScope.launch {
             suspendRunCatching { repository.getAllItems() }
                 .onSuccess { items ->
-                    updateUiState { copy(items = items) }
+                    updateUiState { copy(items = UiStates.Success(items)) }
                 }
                 .onFailure { error ->
                     // Handle error, e.g., send a UiEffect to show an error message
+                    updateUiState { copy(items = UiStates.Error()) }
                 }
         }
     }
 }
 
 data class RestfulUiState(
-    val items: List<RestfulObjectData> = emptyList(),
+    val items: UiStates<List<RestfulObjectData>> = UiStates.Success(emptyList()),
 ) : UiState
 
 sealed interface RestfulUiAction : UiAction {

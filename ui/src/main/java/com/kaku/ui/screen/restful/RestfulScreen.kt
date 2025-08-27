@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -20,10 +21,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.kaku.domain.model.RestfulObjectData
+import com.kaku.ui.common.UiStates
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -59,7 +63,7 @@ private fun ScreenContent(
                 .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            item(key = "button") {
+            item {
                 Spacer(Modifier.height(16.dp))
                 Button(onClick = { dispatch(RestfulUiAction.LoadData) }) {
                     Text("Load All Items")
@@ -67,8 +71,29 @@ private fun ScreenContent(
                 Spacer(Modifier.height(16.dp))
             }
 
-            items(state.items, key = { it.id }) { item ->
-                Text(text = item.name)
+            when (val itemsState = state.items) {
+                is UiStates.Loading -> {
+                    item {
+                        Spacer(modifier = Modifier.height(64.dp))
+                        CircularProgressIndicator()
+                    }
+                }
+
+                is UiStates.Error -> {
+                    item {
+                        Text("An error occurred")
+                    }
+                }
+
+                is UiStates.Success -> {
+                    items(
+                        items = itemsState.data,
+                        key = { it.id },
+                        contentType = { it::class }
+                    ) { item ->
+                        Text(text = item.name)
+                    }
+                }
             }
         }
     }
@@ -76,15 +101,29 @@ private fun ScreenContent(
 
 @Preview
 @Composable
-private fun RestfulScreenPreview() {
+private fun RestfulScreenPreview(
+    @PreviewParameter(RestfulScreenPreviewParameterProvider::class)
+    uiStates: UiStates<List<RestfulObjectData>>
+) {
     MaterialTheme {
         ScreenContent(
             state = RestfulUiState(
-                items = List(10) {
-                    RestfulObjectData(id = it.toString(), name = "Item #$it")
-                }
+                items = uiStates
             ),
             dispatch = {}
         )
     }
+}
+
+private class RestfulScreenPreviewParameterProvider : PreviewParameterProvider<UiStates<List<RestfulObjectData>>> {
+    override val values: Sequence<UiStates<List<RestfulObjectData>>>
+        get() = sequenceOf(
+            UiStates.Loading,
+            UiStates.Error(),
+            UiStates.Success(
+                List(10) {
+                    RestfulObjectData(id = it.toString(), name = "Item #$it")
+                }
+            )
+        )
 }

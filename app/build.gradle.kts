@@ -32,6 +32,7 @@ android {
     buildTypes {
         debug {
             signingConfig = signingConfigs.getByName("debug")
+            applicationIdSuffix = ".debug"
         }
         release {
             signingConfig = signingConfigs.getByName("debug") // temp set to debug

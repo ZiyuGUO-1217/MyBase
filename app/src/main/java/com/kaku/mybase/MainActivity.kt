@@ -1,11 +1,11 @@
-package com.kaku.ui
+package com.kaku.mybase
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.kaku.ui.screen.restful.RestfulScreen
-import com.kaku.ui.theme.MyBaseTheme
+import com.kaku.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -14,7 +14,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            MyBaseTheme {
+            AppTheme {
                 RestfulScreen()
             }
         }

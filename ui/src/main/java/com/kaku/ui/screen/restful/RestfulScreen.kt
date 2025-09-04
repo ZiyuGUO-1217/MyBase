@@ -19,7 +19,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
@@ -28,15 +27,16 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.kaku.domain.model.RestfulObjectData
 import com.kaku.ui.common.UiStates
+import com.kaku.ui.theme.AppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun RestfulScreen() {
+fun RestfulScreen() {
     val viewModel = hiltViewModel<RestfulViewModel>()
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     val dispatch = viewModel::dispatch
 
-    ScreenContent( state, dispatch)
+    ScreenContent(state, dispatch)
 }
 
 @Composable
@@ -49,10 +49,16 @@ private fun ScreenContent(
         modifier = Modifier.fillMaxSize(),
         topBar = {
             TopAppBar(
-                title = { Text(text = "Restful Screen") },
+                title = {
+                    Text(
+                        text = "Restful Screen",
+                        style = MaterialTheme.typography.titleLarge,
+                        color = MaterialTheme.colorScheme.onPrimaryContainer
+                    )
+                },
                 modifier = Modifier.fillMaxWidth(),
                 colors = TopAppBarDefaults.topAppBarColors().copy(
-                    containerColor = Color.LightGray
+                    containerColor = MaterialTheme.colorScheme.primaryContainer
                 )
             )
         }
@@ -105,11 +111,9 @@ private fun RestfulScreenPreview(
     @PreviewParameter(RestfulScreenPreviewParameterProvider::class)
     uiStates: UiStates<List<RestfulObjectData>>
 ) {
-    MaterialTheme {
+    AppTheme {
         ScreenContent(
-            state = RestfulUiState(
-                items = uiStates
-            ),
+            state = RestfulUiState(items = uiStates),
             dispatch = {}
         )
     }

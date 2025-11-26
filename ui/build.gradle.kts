@@ -55,7 +55,7 @@ dependencies {
     implementation(libs.hilt)
     ksp(libs.hilt.compiler)
     // hiltViewModel
-    implementation(libs.hilt.navigation)
+    implementation(libs.hilt.viewmodel.compose)
 
     implementation(libs.timber)
 

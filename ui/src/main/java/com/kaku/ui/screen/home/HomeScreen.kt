@@ -14,6 +14,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.LocalLifecycleOwner
@@ -74,7 +75,7 @@ private fun ScreenContent(
 private fun UiEffects(viewModel: HomeViewModel, snackbarHostState: SnackbarHostState) {
     val lifecycle = LocalLifecycleOwner.current.lifecycle
     LaunchedEffect(viewModel) {
-        viewModel.uiEvent.flowWithLifecycle(lifecycle).collect {
+        viewModel.uiEffect.flowWithLifecycle(lifecycle).collect {
             when(it) {
                 HomeUiEffect.ShowToast -> launch {
                     snackbarHostState.showSnackbar(
@@ -84,4 +85,13 @@ private fun UiEffects(viewModel: HomeViewModel, snackbarHostState: SnackbarHostS
             }
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun ScreenContentPreview() {
+    ScreenContent(
+        state = HomeUiState(info = "Preview Content"),
+        dispatch = {}
+    )
 }

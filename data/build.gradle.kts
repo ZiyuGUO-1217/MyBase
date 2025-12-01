@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.apollo)
 }
 
 android {
@@ -32,6 +33,16 @@ android {
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_17)
         }
+    }
+}
+
+apollo {
+    service("service") {
+        packageName.set("com.kaku.graphql")
+        generateKotlinModels.set(true)
+        generateApolloMetadata.set(true)
+
+        dependsOn(project(":network"))
     }
 }
 

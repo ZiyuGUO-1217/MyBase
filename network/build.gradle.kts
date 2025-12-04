@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.apollo)
 }
 
 android {
@@ -35,9 +36,25 @@ android {
     }
 }
 
+apollo {
+    service("service") {
+        generateKotlinModels.set(true)
+        generateApolloMetadata.set(true)
+        packageName.set("com.kaku.graphql")
+
+        introspection {
+            endpointUrl.set("https://swapi-graphql.netlify.app/graphql")
+            schemaFile.set(file("src/main/graphql/schema.graphqls"))
+        }
+    }
+}
+
 dependencies {
     implementation(libs.retrofit)
     api(libs.retrofit.converter.moshi)
+
+    api(libs.apollo.runtime)
+    implementation(libs.apollo.normalized.cache)
 
     implementation(libs.hilt)
     ksp(libs.hilt.compiler)

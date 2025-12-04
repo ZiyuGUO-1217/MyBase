@@ -1,7 +1,9 @@
 package com.kaku.data.data.di
 
 import com.kaku.data.data.repository.DefaultMyRepository
+import com.kaku.data.data.repository.MyGraphqlRepository
 import com.kaku.data.data.repository.MyRestfulRepository
+import com.kaku.domain.repositories.GraphqlRepository
 import com.kaku.domain.repositories.MyRepository
 import com.kaku.domain.repositories.RestfulRepository
 import dagger.Binds
@@ -25,4 +27,10 @@ abstract class DataModule {
     abstract fun bindRestfulRepository(
         repository: MyRestfulRepository,
     ): RestfulRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindGraphqlRepository(
+        repository: MyGraphqlRepository,
+    ): GraphqlRepository
 }

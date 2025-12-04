@@ -1,5 +1,7 @@
 package com.kaku.data.data.di
 
+import com.apollographql.apollo.ApolloClient
+import com.kaku.data.data.datasource.RemoteGraphQLDataSource
 import com.kaku.data.data.datasource.RemoteRestfulDataSource
 import dagger.Module
 import dagger.Provides
@@ -18,4 +20,10 @@ object DataSourceModule {
     fun provideRemoteRestfulDataSource(
         retrofit: Retrofit,
     ): RemoteRestfulDataSource = retrofit.create()
+
+    @Provides
+    @Singleton
+    internal fun provideRemoteGraphQLDataSource(
+        apolloClient: ApolloClient
+    ): RemoteGraphQLDataSource = RemoteGraphQLDataSource(apolloClient)
 }

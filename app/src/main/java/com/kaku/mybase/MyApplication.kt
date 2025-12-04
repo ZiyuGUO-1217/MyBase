@@ -13,7 +13,7 @@ class MyApplication : Application() {
 
         // Initialize Timber for logging
         if (BuildConfig.DEBUG) {
-            Timber.plant(object : Timber.DebugTree(){
+            Timber.plant(object : Timber.DebugTree() {
                 override fun log(
                     priority: Int,
                     tag: String?,

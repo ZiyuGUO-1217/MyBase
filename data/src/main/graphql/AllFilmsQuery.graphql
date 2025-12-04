@@ -1,0 +1,7 @@
+query AllFilmsQuery {
+    allFilms {
+        films {
+            ...basicFilmInfo
+        }
+    }
+}

@@ -1,5 +1,6 @@
-package com.kaku.ui.screen.restful
+package com.kaku.ui.screen.graphql
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -8,6 +9,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -25,13 +28,13 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.kaku.domain.model.RestfulObjectData
+import com.kaku.domain.model.FilmObjectData
 import com.kaku.ui.common.UiStates
 import com.kaku.ui.theme.AppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun RestfulScreen(viewModel: RestfulViewModel = hiltViewModel()) {
+internal fun GraphqlScreen(viewModel: GraphqlViewModel = hiltViewModel()) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     val dispatch = viewModel::dispatch
 
@@ -41,8 +44,8 @@ internal fun RestfulScreen(viewModel: RestfulViewModel = hiltViewModel()) {
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 private fun ScreenContent(
-    state: RestfulUiState,
-    dispatch: (RestfulUiAction) -> Unit,
+    state: GraphqlUiState,
+    dispatch: (GraphqlUiAction) -> Unit,
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -50,7 +53,7 @@ private fun ScreenContent(
             CenterAlignedTopAppBar(
                 title = {
                     Text(
-                        text = "Restful Screen",
+                        text = "GraphQL Screen",
                         style = MaterialTheme.typography.titleLarge,
                         color = MaterialTheme.colorScheme.onPrimaryContainer
                     )
@@ -70,13 +73,13 @@ private fun ScreenContent(
         ) {
             item {
                 Spacer(Modifier.height(16.dp))
-                Button(onClick = { dispatch(RestfulUiAction.LoadData) }) {
-                    Text("Load All Items")
+                Button(onClick = { dispatch(GraphqlUiAction.LoadData) }) {
+                    Text("Load All Films")
                 }
                 Spacer(Modifier.height(16.dp))
             }
 
-            when (val itemsState = state.items) {
+            when (val filmsState = state.films) {
                 is UiStates.Loading -> {
                     item {
                         Spacer(modifier = Modifier.height(64.dp))
@@ -92,11 +95,11 @@ private fun ScreenContent(
 
                 is UiStates.Success -> {
                     items(
-                        items = itemsState.data,
+                        items = filmsState.data,
                         key = { it.id },
                         contentType = { it::class }
-                    ) { item ->
-                        Text(text = item.name)
+                    ) { film ->
+                        FilmCard(film = film)
                     }
                 }
             }
@@ -104,28 +107,64 @@ private fun ScreenContent(
     }
 }
 
+@Composable
+private fun FilmCard(film: FilmObjectData) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 8.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Text(
+                text = film.title,
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.primary
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = "Director: ${film.director}",
+                style = MaterialTheme.typography.bodyMedium
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = "Release Date: ${film.releaseDate}",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+    }
+}
+
 @Preview
 @Composable
-private fun RestfulScreenPreview(
-    @PreviewParameter(RestfulScreenPreviewParameterProvider::class)
-    uiStates: UiStates<List<RestfulObjectData>>
+private fun GraphqlScreenPreview(
+    @PreviewParameter(GraphqlScreenPreviewParameterProvider::class)
+    uiStates: UiStates<List<FilmObjectData>>
 ) {
     AppTheme {
         ScreenContent(
-            state = RestfulUiState(items = uiStates),
+            state = GraphqlUiState(films = uiStates),
             dispatch = {}
         )
     }
 }
 
-private class RestfulScreenPreviewParameterProvider : PreviewParameterProvider<UiStates<List<RestfulObjectData>>> {
-    override val values: Sequence<UiStates<List<RestfulObjectData>>>
+private class GraphqlScreenPreviewParameterProvider : PreviewParameterProvider<UiStates<List<FilmObjectData>>> {
+    override val values: Sequence<UiStates<List<FilmObjectData>>>
         get() = sequenceOf(
             UiStates.Loading,
             UiStates.Error(),
             UiStates.Success(
-                List(10) {
-                    RestfulObjectData(id = it.toString(), name = "Item #$it")
+                List(5) {
+                    FilmObjectData(
+                        id = "film_$it",
+                        title = "Star Wars Episode ${it + 1}",
+                        director = "Director $it",
+                        releaseDate = "2024-0${it + 1}-01"
+                    )
                 }
             )
         )

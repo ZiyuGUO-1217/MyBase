@@ -25,5 +25,5 @@ enum class NavBarItems(
         selectedIcon = R.drawable.ic_main_graphql_select,
         unselectedIcon = R.drawable.ic_main_graphql,
         route = Route.Graphql
-    );
+    )
 }

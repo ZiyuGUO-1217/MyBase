@@ -20,11 +20,13 @@ import com.kaku.ui.screen.home.homeNavEntry
 import com.kaku.ui.screen.restful.restfulNavEntry
 
 @Composable
-fun MainScreen(modifier: Modifier = Modifier) {
-    val viewModel: MainViewModel = hiltViewModel()
+fun MainScreen(
+    modifier: Modifier = Modifier,
+    viewModel: MainViewModel = hiltViewModel(),
+) {
     val backStack by viewModel.backStack.collectAsStateWithLifecycle()
 
-    val onNavigateTo : (Route) -> Unit = viewModel::onNavigateTo
+    val onNavigateTo: (Route) -> Unit = viewModel::onNavigateTo
     val onBack: () -> Unit = viewModel::onBack
 
     Column(modifier = modifier) {

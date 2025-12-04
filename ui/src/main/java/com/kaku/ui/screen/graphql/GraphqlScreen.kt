@@ -34,8 +34,7 @@ import com.kaku.ui.theme.AppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun GraphqlScreen() {
-    val viewModel = hiltViewModel<GraphqlViewModel>()
+internal fun GraphqlScreen(viewModel: GraphqlViewModel = hiltViewModel()) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     val dispatch = viewModel::dispatch
 

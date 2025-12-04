@@ -7,8 +7,8 @@ import com.kaku.domain.repositories.GraphqlRepository
 import javax.inject.Inject
 
 class MyGraphqlRepository @Inject constructor(
-    private val dataSource: RemoteGraphQLDataSource
-): GraphqlRepository {
+    private val dataSource: RemoteGraphQLDataSource,
+) : GraphqlRepository {
 
     override suspend fun getAllFilms(): List<FilmObjectData> {
         return dataSource.queryAllFilms()

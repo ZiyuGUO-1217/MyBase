@@ -21,7 +21,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkhttpClient() : OkHttpClient {
+    fun provideOkhttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
             .readTimeout(READ_TIMEOUT, TimeUnit.MILLISECONDS)
             .writeTimeout(WRITE_TIMEOUT, TimeUnit.MILLISECONDS)
@@ -36,8 +36,8 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideRetrofit(
-        client: OkHttpClient
-    ) : Retrofit {
+        client: OkHttpClient,
+    ): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(client)

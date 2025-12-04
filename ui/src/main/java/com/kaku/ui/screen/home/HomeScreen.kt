@@ -24,7 +24,7 @@ import com.kaku.ui.screen.home.component.Greeting
 import kotlinx.coroutines.launch
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier) {
+internal fun HomeScreen(modifier: Modifier = Modifier) {
     val viewModel = hiltViewModel<HomeViewModel>()
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 

@@ -31,7 +31,7 @@ import com.kaku.ui.theme.AppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RestfulScreen() {
+internal fun RestfulScreen() {
     val viewModel = hiltViewModel<RestfulViewModel>()
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     val dispatch = viewModel::dispatch

@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.kotlinx.serialization)
 }
 
 android {
@@ -37,6 +38,10 @@ android {
     buildFeatures {
         compose = true
     }
+    kotlinOptions {
+        // for @DrawableRes annotation
+        freeCompilerArgs = listOf("-XXLanguage:+PropertyParamAnnotationDefaultTargetMode")
+    }
 }
 
 dependencies {
@@ -56,6 +61,11 @@ dependencies {
     ksp(libs.hilt.compiler)
     // hiltViewModel
     implementation(libs.hilt.viewmodel.compose)
+
+    implementation(libs.androidx.navigation3.ui)
+    implementation(libs.androidx.navigation3.runtime)
+    implementation(libs.androidx.lifecycle.viewmodel.navigation3)
+    implementation(libs.kotlinx.serialization.core)
 
     implementation(libs.timber)
 

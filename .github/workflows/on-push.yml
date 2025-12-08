@@ -35,6 +35,9 @@ jobs:
       - name: Run Detekt
         run: ./gradlew detekt --no-daemon
 
+      - name: Run Lint
+        run: ./gradlew lint --no-daemon
+
       - name: Build Debug APK
         run: ./gradlew assembleDebug
 

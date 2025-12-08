@@ -22,4 +22,16 @@ subprojects {
         detektPlugins(rootProject.libs.detekt.formatting)
         detektPlugins(rootProject.libs.detekt.compose)
     }
+
+    pluginManager.withPlugin("com.android.library") {
+        configure<com.android.build.api.dsl.LibraryExtension> {
+            lint {
+                lintConfig = rootProject.file("config/lint/lint.xml")
+                abortOnError = true
+                checkReleaseBuilds = true
+                warningsAsErrors = true
+                ignoreTestSources = true
+            }
+        }
+    }
 }

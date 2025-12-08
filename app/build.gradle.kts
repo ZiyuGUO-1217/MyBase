@@ -53,6 +53,13 @@ android {
         compose = true
         buildConfig = true
     }
+
+    lint {
+        lintConfig = rootProject.file("config/lint/lint.xml")
+        abortOnError = true
+        checkReleaseBuilds = true
+        warningsAsErrors = true
+    }
 }
 
 dependencies {

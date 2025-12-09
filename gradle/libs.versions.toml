@@ -22,9 +22,8 @@ navigation3 = "1.0.0"
 kotlinSerialization = "2.1.21"
 kotlinxSerializationCore = "1.8.1"
 detekt = "1.23.8"
-detekeCompose = "0.4.23"
+composeRules = "0.4.28"
 ktlint = "14.0.1"
-ktlintCompose = "0.4.28"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -58,8 +57,8 @@ androidx-navigation3-runtime = { group = "androidx.navigation3", name = "navigat
 androidx-lifecycle-viewmodel-navigation3 = { module = "androidx.lifecycle:lifecycle-viewmodel-navigation3", version.ref = "lifecycle" }
 kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "kotlinxSerializationCore" }
 detekt-formatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }
-detekt-compose = { group = "io.nlopez.compose.rules", name = "detekt", version.ref = "detekeCompose" }
-ktlint-compose = { group = "io.nlopez.compose.rules", name = "ktlint", version.ref = "ktlintCompose" }
+detekt-compose = { group = "io.nlopez.compose.rules", name = "detekt", version.ref = "composeRules" }
+ktlint-compose = { group = "io.nlopez.compose.rules", name = "ktlint", version.ref = "composeRules" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

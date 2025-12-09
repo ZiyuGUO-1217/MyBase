@@ -56,18 +56,16 @@ private fun ScreenContent(
                     )
                 },
                 modifier = Modifier.fillMaxWidth(),
-                colors =
-                    TopAppBarDefaults.topAppBarColors().copy(
-                        containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    ),
+                colors = TopAppBarDefaults.topAppBarColors().copy(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                ),
             )
         },
     ) { innerPadding ->
         LazyColumn(
-            modifier =
-                Modifier
-                    .padding(innerPadding)
-                    .fillMaxSize(),
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             item {

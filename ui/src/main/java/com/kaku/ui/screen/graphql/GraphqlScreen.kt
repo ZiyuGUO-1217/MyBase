@@ -59,18 +59,16 @@ private fun ScreenContent(
                     )
                 },
                 modifier = Modifier.fillMaxWidth(),
-                colors =
-                    TopAppBarDefaults.topAppBarColors().copy(
-                        containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    ),
+                colors = TopAppBarDefaults.topAppBarColors().copy(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                ),
             )
         },
     ) { innerPadding ->
         LazyColumn(
-            modifier =
-                Modifier
-                    .padding(innerPadding)
-                    .fillMaxSize(),
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             item {
@@ -112,10 +110,9 @@ private fun ScreenContent(
 @Composable
 private fun FilmCard(film: FilmObjectData) {
     Card(
-        modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 8.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 8.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
     ) {
         Column(

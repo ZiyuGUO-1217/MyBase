@@ -62,10 +62,9 @@ private fun ScreenContent(
         )
         Button(
             onClick = { dispatch(HomeUiAction.GetInfo) },
-            modifier =
-                Modifier
-                    .align(Alignment.BottomCenter)
-                    .padding(bottom = 64.dp),
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 64.dp),
         ) {
             Text("Get Info")
         }

@@ -2,30 +2,54 @@
 
 echo "Running pre-push hook"
 
-echo "Running Detekt..."
+echo "
+===============
+|  Running detekt...
+===============
+"
 
 ./gradlew detekt --quiet
 
 STATUS=$?
 
 if [ $STATUS -ne 0 ]; then
-  echo "❌ Detekt failed."
+  echo "
+  ===============
+  ❌ Detekt failed.
+  ===============
+  "
   exit 1
 fi
 
-echo "✔ Detekt passed."
+echo "
+===============
+✔ Detekt passed.
+===============
+"
 
-echo "Running Lint..."
+echo "
+===================
+|  Running ktLintCheck...
+===================
+"
 
 ./gradlew lint --quiet
 
 STATUS=$?
 
 if [ $STATUS -ne 0 ]; then
-  echo "❌ Lint failed."
+  echo "
+  ===============
+  ❌ Lint failed.
+  ===============
+  "
   exit 1
 fi
 
-echo "✔ Lint passed."
+echo "
+===============
+✔ Lint passed.
+===============
+"
 
 exit 0

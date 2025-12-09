@@ -7,10 +7,10 @@ STATUS=$?
 
 if [ $STATUS -ne 0 ]; then
     ./gradlew ktlintFormat
-    echo "❌ktLintCheck failed!"
+    echo "❌ ktLintCheck failed!"
     exit 1
 fi
 
-echo "✔ktLintCheck passed!"
+echo "✔ ktLintCheck passed!"
 
 exit 0

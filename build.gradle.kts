@@ -50,3 +50,36 @@ subprojects {
         }
     }
 }
+
+val installGitHooks by tasks.registering(Copy::class) {
+    description = "Installs the git hooks from /scripts."
+    group = "git hooks"
+
+    val scriptsDir = file("$rootDir/scripts")
+    val hooksDir = file("$rootDir/.git/hooks")
+
+    // Inputs: the scripts directory (all files inside)
+    inputs.dir(scriptsDir)
+
+    // Outputs: the specific hook files we expect to create
+    outputs.upToDateWhen {
+        hooksDir.resolve("pre-commit").exists() &&
+            hooksDir.resolve("pre-push").exists()
+    }
+
+    from(scriptsDir) {
+        include("pre-commit", "pre-push")
+    }
+    into(hooksDir)
+
+    doLast {
+        // Make sure the copied hooks are executable
+        hooksDir.resolve("pre-commit").setExecutable(true)
+        hooksDir.resolve("pre-push").setExecutable(true)
+        logger.info("Git hooks installed successfully.")
+    }
+}
+
+afterEvaluate {
+    tasks.getByPath(":app:preBuild").dependsOn(installGitHooks)
+}

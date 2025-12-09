@@ -22,9 +22,20 @@ subprojects {
         buildUponDefaultConfig = true
     }
 
+    ktlint {
+        android = true // Enable Android-specific linting rules
+        ignoreFailures = false // Fail the build if KtLint finds any issues
+        reporters {
+            // Output KtLint results in plain text format
+            reporter(ReporterType.PLAIN)
+            reporter(ReporterType.HTML) // Output KtLint results in HTML format
+        }
+    }
+
     dependencies {
         detektPlugins(rootProject.libs.detekt.formatting)
         detektPlugins(rootProject.libs.detekt.compose)
+        ktlintRuleset(rootProject.libs.ktlint.compose)
     }
 
     pluginManager.withPlugin("com.android.library") {
@@ -36,16 +47,6 @@ subprojects {
                 warningsAsErrors = true
                 ignoreTestSources = true
             }
-        }
-    }
-
-    ktlint {
-        android = true // Enable Android-specific linting rules
-        ignoreFailures = false // Fail the build if KtLint finds any issues
-        reporters {
-            // Output KtLint results in plain text format
-            reporter(ReporterType.PLAIN)
-            reporter(ReporterType.HTML) // Output KtLint results in HTML format
         }
     }
 }

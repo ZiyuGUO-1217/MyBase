@@ -24,6 +24,7 @@ kotlinxSerializationCore = "1.8.1"
 detekt = "1.23.8"
 detekeCompose = "0.4.23"
 ktlint = "14.0.1"
+ktlintCompose = "0.4.28"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -58,6 +59,7 @@ androidx-lifecycle-viewmodel-navigation3 = { module = "androidx.lifecycle:lifecy
 kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "kotlinxSerializationCore" }
 detekt-formatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }
 detekt-compose = { group = "io.nlopez.compose.rules", name = "detekt", version.ref = "detekeCompose" }
+ktlint-compose = { group = "io.nlopez.compose.rules", name = "ktlint", version.ref = "ktlintCompose" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -35,14 +35,14 @@ internal fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
         snackbarHost = {
             SnackbarHost(
                 hostState = snackbarHostState,
-                modifier = Modifier.padding(bottom = 32.dp)
+                modifier = Modifier.padding(bottom = 32.dp),
             )
-        }
+        },
     ) { innerPadding ->
         ScreenContent(
             state = state,
             modifier = Modifier.padding(innerPadding),
-            dispatch = viewModel::dispatch
+            dispatch = viewModel::dispatch,
         )
     }
 
@@ -58,13 +58,14 @@ private fun ScreenContent(
     Box(modifier = modifier.fillMaxSize()) {
         Greeting(
             name = state.info,
-            modifier = Modifier.align(Alignment.Center)
+            modifier = Modifier.align(Alignment.Center),
         )
         Button(
             onClick = { dispatch(HomeUiAction.GetInfo) },
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(bottom = 64.dp)
+            modifier =
+                Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 64.dp),
         ) {
             Text("Get Info")
         }
@@ -80,11 +81,12 @@ private fun UiEffects(
     LaunchedEffect(uiEffect) {
         uiEffect.flowWithLifecycle(lifecycle).collect {
             when (it) {
-                HomeUiEffect.ShowToast -> launch {
-                    snackbarHostState.showSnackbar(
-                        message = "GetInfo succeed!"
-                    )
-                }
+                HomeUiEffect.ShowToast ->
+                    launch {
+                        snackbarHostState.showSnackbar(
+                            message = "GetInfo succeed!",
+                        )
+                    }
             }
         }
     }
@@ -95,6 +97,6 @@ private fun UiEffects(
 private fun ScreenContentPreview() {
     ScreenContent(
         state = HomeUiState(info = "Preview Content"),
-        dispatch = {}
+        dispatch = {},
     )
 }

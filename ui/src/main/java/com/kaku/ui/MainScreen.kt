@@ -34,21 +34,23 @@ fun MainScreen(
             backStack = backStack,
             modifier = Modifier.weight(1f),
             onBack = onBack,
-            entryDecorators = listOf(
-                // Add the default decorators for managing scenes and saving state
-                rememberSaveableStateHolderNavEntryDecorator(),
-                // Add the view model store decorator, scoping ViewModels to NavEntrys instead of Activities/Fragments
-                rememberViewModelStoreNavEntryDecorator()
-            ),
-            entryProvider = entryProvider {
-                homeNavEntry()
-                restfulNavEntry()
-                graphqlNavEntry()
-            }
+            entryDecorators =
+                listOf(
+                    // Add the default decorators for managing scenes and saving state
+                    rememberSaveableStateHolderNavEntryDecorator(),
+                    // Add the view model store decorator, scoping ViewModels to NavEntrys instead of Activities/Fragments
+                    rememberViewModelStoreNavEntryDecorator(),
+                ),
+            entryProvider =
+                entryProvider {
+                    homeNavEntry()
+                    restfulNavEntry()
+                    graphqlNavEntry()
+                },
         )
         BottomNavigationBar(
             currentRoute = backStack.last(),
-            onNavigateTo = onNavigateTo
+            onNavigateTo = onNavigateTo,
         )
     }
 }
@@ -68,14 +70,16 @@ private fun BottomNavigationBar(
                 },
                 icon = {
                     Icon(
-                        painter = painterResource(
-                            id = if (currentRoute == item.route) {
-                                item.selectedIcon
-                            } else {
-                                item.unselectedIcon
-                            }
-                        ),
-                        contentDescription = item.title
+                        painter =
+                            painterResource(
+                                id =
+                                    if (currentRoute == item.route) {
+                                        item.selectedIcon
+                                    } else {
+                                        item.unselectedIcon
+                                    },
+                            ),
+                        contentDescription = item.title,
                     )
                 },
             )

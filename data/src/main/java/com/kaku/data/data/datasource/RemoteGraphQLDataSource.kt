@@ -6,12 +6,10 @@ import com.kaku.graphql.AllFilmsQuery
 import javax.inject.Inject
 
 class RemoteGraphQLDataSource @Inject constructor(
-    private val apolloClient: ApolloClient
+    private val apolloClient: ApolloClient,
 ) {
-
-    suspend fun queryAllFilms(): ApolloResponse<AllFilmsQuery.Data> {
-        return apolloClient
+    suspend fun queryAllFilms(): ApolloResponse<AllFilmsQuery.Data> =
+        apolloClient
             .query(AllFilmsQuery())
             .execute()
-    }
 }

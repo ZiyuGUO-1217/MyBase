@@ -15,12 +15,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class GraphqlViewModel @Inject constructor(
-    private val repository: GraphqlRepository
+    private val repository: GraphqlRepository,
 ) : MviViewModel<GraphqlUiState, GraphqlUiAction, GraphqlUiEffect>() {
-
-    override fun configInitUiState(): GraphqlUiState {
-        return GraphqlUiState()
-    }
+    override fun configInitUiState(): GraphqlUiState = GraphqlUiState()
 
     override fun dispatch(action: GraphqlUiAction) {
         when (action) {
@@ -34,8 +31,7 @@ class GraphqlViewModel @Inject constructor(
             suspendRunCatching { repository.getAllFilms() }
                 .onSuccess { films ->
                     updateUiState { copy(films = UiStates.Success(films)) }
-                }
-                .onFailure { error ->
+                }.onFailure { error ->
                     // Handle error, e.g., send a UiEffect to show an error message
                     updateUiState { copy(films = UiStates.Error()) }
                 }

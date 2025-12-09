@@ -15,22 +15,15 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class DataModule {
+    @Binds
+    @Singleton
+    abstract fun bindMyRepository(repository: DefaultMyRepository): MyRepository
 
     @Binds
     @Singleton
-    abstract fun bindMyRepository(
-        repository: DefaultMyRepository,
-    ): MyRepository
+    abstract fun bindRestfulRepository(repository: MyRestfulRepository): RestfulRepository
 
     @Binds
     @Singleton
-    abstract fun bindRestfulRepository(
-        repository: MyRestfulRepository,
-    ): RestfulRepository
-
-    @Binds
-    @Singleton
-    abstract fun bindGraphqlRepository(
-        repository: MyGraphqlRepository,
-    ): GraphqlRepository
+    abstract fun bindGraphqlRepository(repository: MyGraphqlRepository): GraphqlRepository
 }

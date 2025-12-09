@@ -15,5 +15,4 @@ kotlin {
 }
 
 dependencies {
-    
 }

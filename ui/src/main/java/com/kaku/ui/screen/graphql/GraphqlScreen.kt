@@ -55,21 +55,23 @@ private fun ScreenContent(
                     Text(
                         text = "GraphQL Screen",
                         style = MaterialTheme.typography.titleLarge,
-                        color = MaterialTheme.colorScheme.onPrimaryContainer
+                        color = MaterialTheme.colorScheme.onPrimaryContainer,
                     )
                 },
                 modifier = Modifier.fillMaxWidth(),
-                colors = TopAppBarDefaults.topAppBarColors().copy(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer
-                )
+                colors =
+                    TopAppBarDefaults.topAppBarColors().copy(
+                        containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    ),
             )
-        }
+        },
     ) { innerPadding ->
         LazyColumn(
-            modifier = Modifier
-                .padding(innerPadding)
-                .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
+            modifier =
+                Modifier
+                    .padding(innerPadding)
+                    .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             item {
                 Spacer(Modifier.height(16.dp))
@@ -97,7 +99,7 @@ private fun ScreenContent(
                     items(
                         items = filmsState.data,
                         key = { it.id },
-                        contentType = { it::class }
+                        contentType = { it::class },
                     ) { film ->
                         FilmCard(film = film)
                     }
@@ -110,29 +112,30 @@ private fun ScreenContent(
 @Composable
 private fun FilmCard(film: FilmObjectData) {
     Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 8.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
     ) {
         Column(
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(16.dp),
         ) {
             Text(
                 text = film.title,
                 style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.primary
+                color = MaterialTheme.colorScheme.primary,
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = "Director: ${film.director}",
-                style = MaterialTheme.typography.bodyMedium
+                style = MaterialTheme.typography.bodyMedium,
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = "Release Date: ${film.releaseDate}",
                 style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
     }
@@ -142,30 +145,31 @@ private fun FilmCard(film: FilmObjectData) {
 @Composable
 private fun GraphqlScreenPreview(
     @PreviewParameter(GraphqlScreenPreviewParameterProvider::class)
-    uiStates: UiStates<List<FilmObjectData>>
+    uiStates: UiStates<List<FilmObjectData>>,
 ) {
     AppTheme {
         ScreenContent(
             state = GraphqlUiState(films = uiStates),
-            dispatch = {}
+            dispatch = {},
         )
     }
 }
 
 private class GraphqlScreenPreviewParameterProvider : PreviewParameterProvider<UiStates<List<FilmObjectData>>> {
     override val values: Sequence<UiStates<List<FilmObjectData>>>
-        get() = sequenceOf(
-            UiStates.Loading,
-            UiStates.Error(),
-            UiStates.Success(
-                List(5) {
-                    FilmObjectData(
-                        id = "film_$it",
-                        title = "Star Wars Episode ${it + 1}",
-                        director = "Director $it",
-                        releaseDate = "2024-0${it + 1}-01"
-                    )
-                }
+        get() =
+            sequenceOf(
+                UiStates.Loading,
+                UiStates.Error(),
+                UiStates.Success(
+                    List(5) {
+                        FilmObjectData(
+                            id = "film_$it",
+                            title = "Star Wars Episode ${it + 1}",
+                            director = "Director $it",
+                            releaseDate = "2024-0${it + 1}-01",
+                        )
+                    },
+                ),
             )
-        )
 }

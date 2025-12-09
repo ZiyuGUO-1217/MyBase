@@ -12,12 +12,11 @@ private const val BASE_URL = "https://swapi-graphql.netlify.app/graphql/"
 @Module
 @InstallIn(SingletonComponent::class)
 object GraphQLModule {
-
     @Provides
     @Singleton
-    fun provideApolloClient(): ApolloClient {
-        return ApolloClient.Builder()
+    fun provideApolloClient(): ApolloClient =
+        ApolloClient
+            .Builder()
             .serverUrl(BASE_URL)
             .build()
-    }
 }

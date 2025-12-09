@@ -7,10 +7,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.kaku.ui.theme.AppTheme
 
 @Composable
-internal fun Greeting(name: String, modifier: Modifier = Modifier) {
+internal fun Greeting(
+    name: String,
+    modifier: Modifier = Modifier,
+) {
     Text(
         text = "Hello $name!",
-        modifier = modifier
+        modifier = modifier,
     )
 }
 

@@ -6,7 +6,6 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface RemoteRestfulDataSource {
-
     @GET("objects")
     suspend fun getAllObjects(): List<RestfulObjectApiResponse>
 

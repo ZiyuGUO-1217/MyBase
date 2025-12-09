@@ -9,19 +9,18 @@ import javax.inject.Inject
 class MyRestfulRepository @Inject constructor(
     private val remoteDataSource: RemoteRestfulDataSource,
 ) : RestfulRepository {
-
-    override suspend fun getAllItems(): List<RestfulObjectData> {
-        return remoteDataSource.getAllObjects()
+    override suspend fun getAllItems(): List<RestfulObjectData> =
+        remoteDataSource
+            .getAllObjects()
             .map { it.toData() }
-    }
 
-    override suspend fun getItemsById(ids: List<String>): List<RestfulObjectData> {
-        return remoteDataSource.getObjectsByIds(ids)
+    override suspend fun getItemsById(ids: List<String>): List<RestfulObjectData> =
+        remoteDataSource
+            .getObjectsByIds(ids)
             .map { it.toData() }
-    }
 
-    override suspend fun getItem(id: String): RestfulObjectData {
-        return remoteDataSource.getObject(id)
+    override suspend fun getItem(id: String): RestfulObjectData =
+        remoteDataSource
+            .getObject(id)
             .toData()
-    }
 }

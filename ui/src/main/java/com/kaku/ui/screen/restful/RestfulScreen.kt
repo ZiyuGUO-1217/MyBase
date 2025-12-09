@@ -52,21 +52,23 @@ private fun ScreenContent(
                     Text(
                         text = "Restful Screen",
                         style = MaterialTheme.typography.titleLarge,
-                        color = MaterialTheme.colorScheme.onPrimaryContainer
+                        color = MaterialTheme.colorScheme.onPrimaryContainer,
                     )
                 },
                 modifier = Modifier.fillMaxWidth(),
-                colors = TopAppBarDefaults.topAppBarColors().copy(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer
-                )
+                colors =
+                    TopAppBarDefaults.topAppBarColors().copy(
+                        containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    ),
             )
-        }
+        },
     ) { innerPadding ->
         LazyColumn(
-            modifier = Modifier
-                .padding(innerPadding)
-                .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
+            modifier =
+                Modifier
+                    .padding(innerPadding)
+                    .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             item {
                 Spacer(Modifier.height(16.dp))
@@ -94,7 +96,7 @@ private fun ScreenContent(
                     items(
                         items = itemsState.data,
                         key = { it.id },
-                        contentType = { it::class }
+                        contentType = { it::class },
                     ) { item ->
                         Text(text = item.name)
                     }
@@ -108,25 +110,26 @@ private fun ScreenContent(
 @Composable
 private fun RestfulScreenPreview(
     @PreviewParameter(RestfulScreenPreviewParameterProvider::class)
-    uiStates: UiStates<List<RestfulObjectData>>
+    uiStates: UiStates<List<RestfulObjectData>>,
 ) {
     AppTheme {
         ScreenContent(
             state = RestfulUiState(items = uiStates),
-            dispatch = {}
+            dispatch = {},
         )
     }
 }
 
 private class RestfulScreenPreviewParameterProvider : PreviewParameterProvider<UiStates<List<RestfulObjectData>>> {
     override val values: Sequence<UiStates<List<RestfulObjectData>>>
-        get() = sequenceOf(
-            UiStates.Loading,
-            UiStates.Error(),
-            UiStates.Success(
-                List(10) {
-                    RestfulObjectData(id = it.toString(), name = "Item #$it")
-                }
+        get() =
+            sequenceOf(
+                UiStates.Loading,
+                UiStates.Error(),
+                UiStates.Success(
+                    List(10) {
+                        RestfulObjectData(id = it.toString(), name = "Item #$it")
+                    },
+                ),
             )
-        )
 }

@@ -1,3 +1,5 @@
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
+
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
     alias(libs.plugins.android.application) apply false
@@ -8,10 +10,12 @@ plugins {
     alias(libs.plugins.hilt) apply false
     alias(libs.plugins.ksp) apply false
     alias(libs.plugins.detekt)
+    alias(libs.plugins.ktlint)
 }
 
 subprojects {
     apply(plugin = "io.gitlab.arturbosch.detekt")
+    apply(plugin = "org.jlleitschuh.gradle.ktlint")
 
     detekt {
         config.setFrom(files("$rootDir/config/detekt/detekt.yml"))
@@ -32,6 +36,16 @@ subprojects {
                 warningsAsErrors = true
                 ignoreTestSources = true
             }
+        }
+    }
+
+    ktlint {
+        android = true // Enable Android-specific linting rules
+        ignoreFailures = false // Fail the build if KtLint finds any issues
+        reporters {
+            // Output KtLint results in plain text format
+            reporter(ReporterType.PLAIN)
+            reporter(ReporterType.HTML) // Output KtLint results in HTML format
         }
     }
 }

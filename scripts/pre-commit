@@ -1,0 +1,15 @@
+#!/bin/sh
+
+echo "Running ktLintCheck..."
+./gradlew ktlintCheck
+
+STATUS=$?
+
+if [ $STATUS -ne 0 ]; then
+    echo "❌ktLintCheck failed!"
+    exit 1
+fi
+
+echo "✔ktLintCheck passed!"
+
+exit 0

@@ -7,6 +7,8 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.detekt)
+    alias(libs.plugins.ktlint)
 }
 
 android {
@@ -60,6 +62,16 @@ android {
         checkReleaseBuilds = true
         warningsAsErrors = true
     }
+
+    detekt {
+        config.setFrom(files("$rootDir/config/detekt/detekt.yml"))
+        buildUponDefaultConfig = true
+    }
+
+    ktlint {
+        android = true // Enable Android-specific linting rules
+        ignoreFailures = false // Fail the build if KtLint finds any issues
+    }
 }
 
 dependencies {
@@ -81,13 +93,9 @@ dependencies {
     implementation(libs.hilt)
     ksp(libs.hilt.compiler)
 
+    detektPlugins(libs.detekt.formatting)
+    detektPlugins(libs.detekt.compose)
+    ktlintRuleset(libs.ktlint.compose)
+
     testImplementation(libs.junit)
-
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
-
-    debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
 }

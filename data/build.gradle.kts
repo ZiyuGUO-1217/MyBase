@@ -49,11 +49,10 @@ apollo {
 dependencies {
     implementation(project(":domain"))
     implementation(project(":network"))
+    testImplementation(project(":test-common"))
 
     implementation(libs.hilt)
     ksp(libs.hilt.compiler)
 
     ksp(libs.moshi.codegen) // for @JsonClass(generateAdapter = true)
-
-    testImplementation(libs.junit)
 }

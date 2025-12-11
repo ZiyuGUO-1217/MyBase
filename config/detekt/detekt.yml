@@ -886,7 +886,7 @@ formatting:
   ImportOrdering:
     active: true
     autoCorrect: true
-    layout: '*,java.**,javax.**,kotlin.**,^'
+    layout: '*,java.**,javax.**,kotlin.**,kotlinx.**,^'
   Indentation:
     active: true
     autoCorrect: true

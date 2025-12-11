@@ -10,8 +10,8 @@ import com.kaku.ui.common.UiState
 import com.kaku.ui.common.UiStates
 import com.kaku.ui.common.suspendRunCatching
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlinx.coroutines.launch
 
 @HiltViewModel
 class RestfulViewModel @Inject constructor(

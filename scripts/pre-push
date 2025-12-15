@@ -1,80 +1,16 @@
 #!/bin/sh
 
-echo "Running pre-push hook"
+echo "🚀 Running pre-push checks..."
 
-echo "
-===============
-|  Running detekt...
-===============
-"
-
-./gradlew detekt --quiet
+./gradlew detekt ktlintCheck lintDebug testDebugUnitTest
 
 STATUS=$?
 
 if [ $STATUS -ne 0 ]; then
-  echo "
-  ===============
-  ❌ Detekt failed.
-  ===============
-  "
+  echo "❌ Pre-push checks failed!"
   exit 1
 fi
 
-echo "
-===============
-✔ Detekt passed.
-===============
-"
-
-echo "
-===================
-|  Running ktLintCheck...
-===================
-"
-
-./gradlew lint --quiet
-
-STATUS=$?
-
-if [ $STATUS -ne 0 ]; then
-  echo "
-  ===============
-  ❌ Lint failed.
-  ===============
-  "
-  exit 1
-fi
-
-echo "
-===============
-✔ Lint passed.
-===============
-"
-
-echo "
-===================
-|  Running Unit Tests...
-===================
-"
-
-./gradlew testDebugUnitTest --quiet
-
-STATUS=$?
-
-if [ $STATUS -ne 0 ]; then
-  echo "
-  ===============
-  ❌ Unit Tests failed.
-  ===============
-  "
-  exit 1
-fi
-
-echo "
-===============
-✔ Unit Tests passed.
-===============
-"
+echo "✅ Pre-push checks passed!"
 
 exit 0

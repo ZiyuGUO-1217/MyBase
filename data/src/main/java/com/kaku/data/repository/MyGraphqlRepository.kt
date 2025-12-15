@@ -1,7 +1,7 @@
-package com.kaku.data.data.repository
+package com.kaku.data.repository
 
-import com.kaku.data.data.datasource.RemoteGraphQLDataSource
-import com.kaku.data.data.mapper.toData
+import com.kaku.data.datasource.RemoteGraphQLDataSource
+import com.kaku.data.mapper.toData
 import com.kaku.domain.model.FilmObjectData
 import com.kaku.domain.repositories.GraphqlRepository
 import javax.inject.Inject

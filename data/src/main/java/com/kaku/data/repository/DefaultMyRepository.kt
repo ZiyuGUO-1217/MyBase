@@ -1,4 +1,4 @@
-package com.kaku.data.data.repository
+package com.kaku.data.repository
 
 import com.kaku.domain.repositories.MyRepository
 import javax.inject.Inject

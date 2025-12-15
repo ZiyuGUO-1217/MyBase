@@ -1,6 +1,6 @@
-package com.kaku.data.data.mapper
+package com.kaku.data.mapper
 
-import com.kaku.data.data.model.RestfulObjectApiResponse
+import com.kaku.data.model.RestfulObjectApiResponse
 import com.kaku.domain.model.RestfulObjectData
 
 fun RestfulObjectApiResponse.toData(): RestfulObjectData =

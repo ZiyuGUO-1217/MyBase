@@ -1,8 +1,8 @@
-package com.kaku.data.data.di
+package com.kaku.data.di
 
-import com.kaku.data.data.repository.DefaultMyRepository
-import com.kaku.data.data.repository.MyGraphqlRepository
-import com.kaku.data.data.repository.MyRestfulRepository
+import com.kaku.data.repository.DefaultMyRepository
+import com.kaku.data.repository.MyGraphqlRepository
+import com.kaku.data.repository.MyRestfulRepository
 import com.kaku.domain.repositories.GraphqlRepository
 import com.kaku.domain.repositories.MyRepository
 import com.kaku.domain.repositories.RestfulRepository

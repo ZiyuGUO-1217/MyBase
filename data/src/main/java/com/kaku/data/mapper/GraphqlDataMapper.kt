@@ -1,4 +1,4 @@
-package com.kaku.data.data.mapper
+package com.kaku.data.mapper
 
 import com.kaku.domain.model.FilmObjectData
 import com.kaku.graphql.AllFilmsQuery

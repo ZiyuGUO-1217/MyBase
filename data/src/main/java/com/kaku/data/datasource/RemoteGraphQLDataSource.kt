@@ -1,4 +1,4 @@
-package com.kaku.data.data.datasource
+package com.kaku.data.datasource
 
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.ApolloResponse

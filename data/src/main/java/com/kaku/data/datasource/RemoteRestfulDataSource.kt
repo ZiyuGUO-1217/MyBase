@@ -1,6 +1,6 @@
-package com.kaku.data.data.datasource
+package com.kaku.data.datasource
 
-import com.kaku.data.data.model.RestfulObjectApiResponse
+import com.kaku.data.model.RestfulObjectApiResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

@@ -1,4 +1,4 @@
-package com.kaku.data.data.model
+package com.kaku.data.model
 
 import com.squareup.moshi.JsonClass
 

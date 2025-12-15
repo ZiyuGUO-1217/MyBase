@@ -1,8 +1,8 @@
-package com.kaku.data.data.di
+package com.kaku.data.di
 
 import com.apollographql.apollo.ApolloClient
-import com.kaku.data.data.datasource.RemoteGraphQLDataSource
-import com.kaku.data.data.datasource.RemoteRestfulDataSource
+import com.kaku.data.datasource.RemoteGraphQLDataSource
+import com.kaku.data.datasource.RemoteRestfulDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

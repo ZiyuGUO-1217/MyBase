@@ -1,7 +1,7 @@
-package com.kaku.data.data.repository
+package com.kaku.data.repository
 
-import com.kaku.data.data.datasource.RemoteRestfulDataSource
-import com.kaku.data.data.mapper.toData
+import com.kaku.data.datasource.RemoteRestfulDataSource
+import com.kaku.data.mapper.toData
 import com.kaku.domain.model.RestfulObjectData
 import com.kaku.domain.repositories.RestfulRepository
 import javax.inject.Inject

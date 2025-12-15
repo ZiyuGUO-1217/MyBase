@@ -15,7 +15,8 @@ import kotlinx.coroutines.test.setMain
  *
  * See details:
  * [kotlinx.coroutines.test.advanceUntilIdle]:
- * Runs all other coroutines on the scheduler until there is nothing left in the queue. This is a good default choice to let all pending coroutines run, and it will work in most test scenarios.
+ * Runs all other coroutines on the scheduler until there is nothing left in the queue. This is a good default choice
+ * to let all pending coroutines run, and it will work in most test scenarios.
  *
  * [kotlinx.coroutines.test.advanceTimeBy]:
  * Advances virtual time by the given amount and runs any coroutines scheduled to run before that point in virtual time.

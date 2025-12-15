@@ -52,4 +52,29 @@ echo "
 ===============
 "
 
+echo "
+===================
+|  Running Unit Tests...
+===================
+"
+
+./gradlew testDebugUnitTest --quiet
+
+STATUS=$?
+
+if [ $STATUS -ne 0 ]; then
+  echo "
+  ===============
+  ❌ Unit Tests failed.
+  ===============
+  "
+  exit 1
+fi
+
+echo "
+===============
+✔ Unit Tests passed.
+===============
+"
+
 exit 0

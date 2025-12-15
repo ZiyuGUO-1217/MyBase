@@ -1,7 +1,7 @@
 package com.kaku.data.repository
 
 import com.kaku.data.datasource.RemoteRestfulDataSource
-import com.kaku.data.mapper.toData
+import com.kaku.data.mapper.RestfulDataMapper
 import com.kaku.domain.model.RestfulObjectData
 import com.kaku.domain.repositories.RestfulRepository
 import javax.inject.Inject
@@ -12,15 +12,15 @@ class MyRestfulRepository @Inject constructor(
     override suspend fun getAllItems(): List<RestfulObjectData> =
         remoteDataSource
             .getAllObjects()
-            .map { it.toData() }
+            .map(RestfulDataMapper::toRestfulObjectData)
 
     override suspend fun getItemsById(ids: List<String>): List<RestfulObjectData> =
         remoteDataSource
             .getObjectsByIds(ids)
-            .map { it.toData() }
+            .map(RestfulDataMapper::toRestfulObjectData)
 
     override suspend fun getItem(id: String): RestfulObjectData =
         remoteDataSource
             .getObject(id)
-            .toData()
+            .run(RestfulDataMapper::toRestfulObjectData)
 }

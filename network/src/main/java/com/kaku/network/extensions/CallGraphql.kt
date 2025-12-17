@@ -5,6 +5,7 @@ import com.apollographql.apollo.api.Query
 import com.apollographql.apollo.exception.ApolloException
 import okio.IOException
 
+@Suppress("TooGenericExceptionCaught")
 suspend inline fun <D : Query.Data> callGraphql(
     call: () -> ApolloCall<D>,
 ): Result<D> = try {

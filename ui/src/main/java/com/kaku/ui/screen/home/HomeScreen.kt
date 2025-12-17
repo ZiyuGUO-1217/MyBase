@@ -21,8 +21,6 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
 import com.kaku.ui.screen.home.component.Greeting
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.launch
 
 @Composable
 internal fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
@@ -46,7 +44,23 @@ internal fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
         )
     }
 
-    UiEffects(viewModel.uiEffect, snackbarHostState)
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
+    LaunchedEffect(Unit) {
+        viewModel.uiEffect
+            .flowWithLifecycle(lifecycle)
+            .collect { handleUiEffects(it, snackbarHostState) }
+    }
+}
+
+private suspend fun handleUiEffects(
+    effect: HomeUiEffect,
+    snackbarHostState: SnackbarHostState,
+) {
+    when (effect) {
+        HomeUiEffect.ShowToast -> {
+            snackbarHostState.showSnackbar(message = "GetInfo succeed!")
+        }
+    }
 }
 
 @Composable
@@ -67,26 +81,6 @@ private fun ScreenContent(
                 .padding(bottom = 64.dp),
         ) {
             Text("Get Info")
-        }
-    }
-}
-
-@Composable
-private fun UiEffects(
-    uiEffect: Flow<HomeUiEffect>,
-    snackbarHostState: SnackbarHostState,
-) {
-    val lifecycle = LocalLifecycleOwner.current.lifecycle
-    LaunchedEffect(uiEffect) {
-        uiEffect.flowWithLifecycle(lifecycle).collect {
-            when (it) {
-                HomeUiEffect.ShowToast ->
-                    launch {
-                        snackbarHostState.showSnackbar(
-                            message = "GetInfo succeed!",
-                        )
-                    }
-            }
         }
     }
 }

@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.apollo)
 }
 
 android {
@@ -35,14 +36,23 @@ android {
     }
 }
 
+apollo {
+    service("service") {
+        packageName.set("com.kaku.graphql")
+        generateKotlinModels.set(true)
+        generateApolloMetadata.set(true)
+
+        dependsOn(project(":network"))
+    }
+}
+
 dependencies {
     implementation(project(":domain"))
     implementation(project(":network"))
+    testImplementation(project(":test-common"))
 
     implementation(libs.hilt)
     ksp(libs.hilt.compiler)
 
     ksp(libs.moshi.codegen) // for @JsonClass(generateAdapter = true)
-
-    testImplementation(libs.junit)
 }

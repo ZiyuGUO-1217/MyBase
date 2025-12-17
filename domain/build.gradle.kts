@@ -15,5 +15,5 @@ kotlin {
 }
 
 dependencies {
-    
+    testImplementation(project(":test-common"))
 }

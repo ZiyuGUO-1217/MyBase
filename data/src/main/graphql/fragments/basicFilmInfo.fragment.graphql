@@ -1,0 +1,6 @@
+fragment basicFilmInfo on Film {
+    id
+    title
+    director
+    releaseDate
+}

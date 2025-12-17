@@ -8,35 +8,34 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.kaku.domain.model.RestfulObjectData
 import com.kaku.ui.common.UiStates
+import com.kaku.ui.theme.AppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun RestfulScreen() {
-    val viewModel = hiltViewModel<RestfulViewModel>()
+internal fun RestfulScreen(viewModel: RestfulViewModel = hiltViewModel()) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     val dispatch = viewModel::dispatch
 
-    ScreenContent( state, dispatch)
+    ScreenContent(state, dispatch)
 }
 
 @Composable
@@ -48,20 +47,26 @@ private fun ScreenContent(
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            TopAppBar(
-                title = { Text(text = "Restful Screen") },
+            CenterAlignedTopAppBar(
+                title = {
+                    Text(
+                        text = "Restful Screen",
+                        style = MaterialTheme.typography.titleLarge,
+                        color = MaterialTheme.colorScheme.onPrimaryContainer,
+                    )
+                },
                 modifier = Modifier.fillMaxWidth(),
                 colors = TopAppBarDefaults.topAppBarColors().copy(
-                    containerColor = Color.LightGray
-                )
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                ),
             )
-        }
+        },
     ) { innerPadding ->
         LazyColumn(
             modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             item {
                 Spacer(Modifier.height(16.dp))
@@ -89,7 +94,7 @@ private fun ScreenContent(
                     items(
                         items = itemsState.data,
                         key = { it.id },
-                        contentType = { it::class }
+                        contentType = { it::class },
                     ) { item ->
                         Text(text = item.name)
                     }
@@ -103,27 +108,26 @@ private fun ScreenContent(
 @Composable
 private fun RestfulScreenPreview(
     @PreviewParameter(RestfulScreenPreviewParameterProvider::class)
-    uiStates: UiStates<List<RestfulObjectData>>
+    uiStates: UiStates<List<RestfulObjectData>>,
 ) {
-    MaterialTheme {
+    AppTheme {
         ScreenContent(
-            state = RestfulUiState(
-                items = uiStates
-            ),
-            dispatch = {}
+            state = RestfulUiState(items = uiStates),
+            dispatch = {},
         )
     }
 }
 
 private class RestfulScreenPreviewParameterProvider : PreviewParameterProvider<UiStates<List<RestfulObjectData>>> {
     override val values: Sequence<UiStates<List<RestfulObjectData>>>
-        get() = sequenceOf(
-            UiStates.Loading,
-            UiStates.Error(),
-            UiStates.Success(
-                List(10) {
-                    RestfulObjectData(id = it.toString(), name = "Item #$it")
-                }
+        get() =
+            sequenceOf(
+                UiStates.Loading,
+                UiStates.Error(),
+                UiStates.Success(
+                    List(10) {
+                        RestfulObjectData(id = it.toString(), name = "Item #$it")
+                    },
+                ),
             )
-        )
 }

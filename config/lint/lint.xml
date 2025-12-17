@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+
+    <!-- Treat these issues as errors -->
+    <issue id="HardcodedText" severity="error" />
+    <issue id="NewApi" severity="error" />
+    <issue id="WrongThread" severity="error" />
+    <issue id="MissingPermission" severity="error" />
+
+    <!-- Treat these issues as warnings -->
+    <issue id="UnusedResources" severity="warning" />
+    <issue id="IconMissingDensityFolder" severity="warning" />
+    <issue id="ContentDescription" severity="warning" />
+    <issue id="RtlHardcoded" severity="warning" />
+    <issue id="KeyboardInaccessibleWidget" severity="warning" />
+
+    <!--  Treat these issues as informational -->
+    <issue id="AndroidGradlePluginVersion" severity="informational" />
+    <issue id="GradleDependency" severity="informational" />
+    <issue id="NewerVersionAvailable" severity="informational" />
+</lint>

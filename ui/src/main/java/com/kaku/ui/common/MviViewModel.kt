@@ -13,12 +13,11 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 abstract class MviViewModel<S : UiState, A : UiAction, E : UiEffect> : ViewModel() {
-
     private val _uiState: MutableStateFlow<S> = MutableStateFlow(configInitUiState())
     val uiState: StateFlow<S> = _uiState.asStateFlow()
 
-    private val _uiEvent: Channel<E> = Channel(BUFFERED)
-    val uiEvent: Flow<E> = _uiEvent.receiveAsFlow()
+    private val _uiEffect: Channel<E> = Channel(BUFFERED)
+    val uiEffect: Flow<E> = _uiEffect.receiveAsFlow()
 
     abstract fun configInitUiState(): S
 
@@ -30,7 +29,7 @@ abstract class MviViewModel<S : UiState, A : UiAction, E : UiEffect> : ViewModel
 
     protected fun sendUiEffect(effect: E) {
         viewModelScope.launch {
-            _uiEvent.send(effect)
+            _uiEffect.send(effect)
         }
     }
 }

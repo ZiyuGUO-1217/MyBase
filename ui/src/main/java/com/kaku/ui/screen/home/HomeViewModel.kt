@@ -12,12 +12,10 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val myRepository: MyRepository,
 ) : MviViewModel<HomeUiState, HomeUiAction, HomeUiEffect>() {
-
-    override fun configInitUiState(): HomeUiState {
-        return HomeUiState(
-            info = "Android"
+    override fun configInitUiState(): HomeUiState =
+        HomeUiState(
+            info = "Android",
         )
-    }
 
     override fun dispatch(action: HomeUiAction) {
         when (action) {

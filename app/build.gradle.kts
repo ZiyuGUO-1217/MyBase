@@ -7,6 +7,8 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.detekt)
+    alias(libs.plugins.ktlint)
 }
 
 android {
@@ -32,6 +34,7 @@ android {
     buildTypes {
         debug {
             signingConfig = signingConfigs.getByName("debug")
+            applicationIdSuffix = ".debug"
         }
         release {
             signingConfig = signingConfigs.getByName("debug") // temp set to debug
@@ -51,6 +54,23 @@ android {
     buildFeatures {
         compose = true
         buildConfig = true
+    }
+
+    lint {
+        lintConfig = rootProject.file("config/lint/lint.xml")
+        abortOnError = true
+        checkReleaseBuilds = true
+        warningsAsErrors = true
+    }
+
+    detekt {
+        config.setFrom(files("$rootDir/config/detekt/detekt.yml"))
+        buildUponDefaultConfig = true
+    }
+
+    ktlint {
+        android = true // Enable Android-specific linting rules
+        ignoreFailures = false // Fail the build if KtLint finds any issues
     }
 }
 
@@ -73,13 +93,9 @@ dependencies {
     implementation(libs.hilt)
     ksp(libs.hilt.compiler)
 
+    detektPlugins(libs.detekt.formatting)
+    detektPlugins(libs.detekt.compose)
+    ktlintRuleset(libs.ktlint.compose)
+
     testImplementation(libs.junit)
-
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
-
-    debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
 }

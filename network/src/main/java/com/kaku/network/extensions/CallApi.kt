@@ -1,15 +1,13 @@
-package com.kaku.ui.common
+package com.kaku.network.extensions
 
-import timber.log.Timber
 import kotlin.coroutines.cancellation.CancellationException
 
 @Suppress("TooGenericExceptionCaught")
-suspend inline fun <T> suspendRunCatching(block: suspend () -> T): Result<T> =
+suspend inline fun <T> callApi(block: suspend () -> T): Result<T> =
     try {
         Result.success(block())
     } catch (cancellationException: CancellationException) {
         throw cancellationException
     } catch (exception: Exception) {
-        Timber.i("Returning failure Result")
         Result.failure(exception)
     }

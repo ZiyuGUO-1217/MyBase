@@ -8,7 +8,6 @@ import com.kaku.ui.common.UiAction
 import com.kaku.ui.common.UiEffect
 import com.kaku.ui.common.UiState
 import com.kaku.ui.common.UiStates
-import com.kaku.ui.common.suspendRunCatching
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.launch
@@ -28,7 +27,7 @@ class RestfulViewModel @Inject constructor(
     private fun loadData() {
         updateUiState { copy(items = UiStates.Loading) }
         viewModelScope.launch {
-            suspendRunCatching { repository.getAllItems() }
+            repository.getAllItems()
                 .onSuccess { items ->
                     updateUiState { copy(items = UiStates.Success(items)) }
                 }.onFailure { error ->

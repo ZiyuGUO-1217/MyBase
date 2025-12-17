@@ -36,7 +36,7 @@ class GraphqlViewModelTest {
                 releaseDate = "1977-05-25",
             ),
         )
-        coEvery { repository.getAllFilms() } returns films
+        coEvery { repository.getAllFilms() } returns Result.success(films)
 
         viewModel.uiState.test {
             awaitItem() // Initial state
@@ -50,7 +50,7 @@ class GraphqlViewModelTest {
 
     @Test
     fun `loadData failure updates state to Error`() = runTest {
-        coEvery { repository.getAllFilms() } throws Exception("Network error")
+        coEvery { repository.getAllFilms() } returns Result.failure(Exception("Network error"))
 
         viewModel.uiState.test {
             awaitItem() // Initial state

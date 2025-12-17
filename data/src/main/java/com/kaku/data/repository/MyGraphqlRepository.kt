@@ -9,12 +9,10 @@ import javax.inject.Inject
 class MyGraphqlRepository @Inject constructor(
     private val dataSource: RemoteGraphQLDataSource,
 ) : GraphqlRepository {
-    override suspend fun getAllFilms(): List<FilmObjectData> {
-        val films = dataSource
-            .queryAllFilms()
-            .dataOrThrow()
-            .allFilms
-
-        return GraphqlDataMapper.toFilmObjectData(films)
+    override suspend fun getAllFilms(): Result<List<FilmObjectData>> {
+        return dataSource.queryAllFilms()
+            .mapCatching {
+                GraphqlDataMapper.toFilmObjectData(it.allFilms)
+            }
     }
 }

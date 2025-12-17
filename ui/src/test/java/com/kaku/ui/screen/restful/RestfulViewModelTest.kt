@@ -31,7 +31,7 @@ class RestfulViewModelTest {
         val items = listOf(
             RestfulObjectData(id = "1", name = "Item 1"),
         )
-        coEvery { repository.getAllItems() } returns items
+        coEvery { repository.getAllItems() } returns Result.success(items)
 
         viewModel.uiState.test {
             awaitItem() // Initial state
@@ -45,7 +45,7 @@ class RestfulViewModelTest {
 
     @Test
     fun `loadData failure updates state to Error`() = runTest {
-        coEvery { repository.getAllItems() } throws Exception("Network error")
+        coEvery { repository.getAllItems() } returns Result.failure(Exception("Network error"))
 
         viewModel.uiState.test {
             awaitItem() // Initial state

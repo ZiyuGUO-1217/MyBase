@@ -1,6 +1,5 @@
 package com.kaku.data.repository
 
-import com.apollographql.apollo.api.ApolloResponse
 import com.kaku.data.datasource.RemoteGraphQLDataSource
 import com.kaku.graphql.AllFilmsQuery
 import com.kaku.graphql.fragment.BasicFilmInfo
@@ -9,7 +8,6 @@ import io.mockk.coVerify
 import io.mockk.mockk
 import org.junit.Before
 import org.junit.Test
-import java.util.UUID
 import kotlinx.coroutines.test.runTest
 
 class MyGraphqlRepositoryTest {
@@ -33,12 +31,7 @@ class MyGraphqlRepositoryTest {
         val allFilms = AllFilmsQuery.AllFilms(films = listOf(film))
         val data = AllFilmsQuery.Data(allFilms = allFilms)
 
-        val query = AllFilmsQuery()
-        val response = ApolloResponse.Builder(query, UUID.randomUUID())
-            .data(data)
-            .build()
-
-        coEvery { dataSource.queryAllFilms() } returns response
+        coEvery { dataSource.queryAllFilms() } returns Result.success(data)
 
         repository.getAllFilms()
 

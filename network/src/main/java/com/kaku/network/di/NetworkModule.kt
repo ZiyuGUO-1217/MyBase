@@ -26,9 +26,7 @@ object NetworkModule {
             .readTimeout(READ_TIMEOUT, TimeUnit.MILLISECONDS)
             .writeTimeout(WRITE_TIMEOUT, TimeUnit.MILLISECONDS)
             .addInterceptor { chain ->
-                val builder = chain.request().newBuilder()
-                builder.header("content-type", "application/json")
-                return@addInterceptor chain.proceed(builder.build())
+                chain.proceed(chain.request())
             }.build()
     }
 

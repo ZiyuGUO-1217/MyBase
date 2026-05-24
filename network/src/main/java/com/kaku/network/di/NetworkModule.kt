@@ -18,30 +18,25 @@ private const val BASE_URL = "https://api.restful-api.dev/"
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
-
     @Provides
     @Singleton
-    fun provideOkhttpClient() : OkHttpClient {
-        return OkHttpClient.Builder()
+    fun provideOkhttpClient(): OkHttpClient {
+        return OkHttpClient
+            .Builder()
             .readTimeout(READ_TIMEOUT, TimeUnit.MILLISECONDS)
             .writeTimeout(WRITE_TIMEOUT, TimeUnit.MILLISECONDS)
             .addInterceptor { chain ->
-                val builder = chain.request().newBuilder()
-                builder.header("content-type", "application/json")
-                return@addInterceptor chain.proceed(builder.build())
-            }
-            .build()
+                chain.proceed(chain.request())
+            }.build()
     }
 
     @Provides
     @Singleton
-    fun provideRetrofit(
-        client: OkHttpClient
-    ) : Retrofit {
-        return Retrofit.Builder()
+    fun provideRetrofit(client: OkHttpClient): Retrofit =
+        Retrofit
+            .Builder()
             .baseUrl(BASE_URL)
             .client(client)
             .addConverterFactory(MoshiConverterFactory.create())
             .build()
-    }
 }

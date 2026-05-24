@@ -14,38 +14,53 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
 import com.kaku.ui.screen.home.component.Greeting
-import kotlinx.coroutines.launch
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier) {
-    val viewModel = hiltViewModel<HomeViewModel>()
+internal fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
     val snackbarHostState = remember { SnackbarHostState() }
 
     Scaffold(
-        modifier = modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize(),
         snackbarHost = {
             SnackbarHost(
                 hostState = snackbarHostState,
-                modifier = Modifier.padding(bottom = 32.dp)
+                modifier = Modifier.padding(bottom = 32.dp),
             )
-        }
+        },
     ) { innerPadding ->
         ScreenContent(
             state = state,
             modifier = Modifier.padding(innerPadding),
-            dispatch = viewModel::dispatch
+            dispatch = viewModel::dispatch,
         )
     }
 
-    UiEffects(viewModel, snackbarHostState)
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
+    LaunchedEffect(Unit) {
+        viewModel.uiEffect
+            .flowWithLifecycle(lifecycle)
+            .collect { handleUiEffects(it, snackbarHostState) }
+    }
+}
+
+private suspend fun handleUiEffects(
+    effect: HomeUiEffect,
+    snackbarHostState: SnackbarHostState,
+) {
+    when (effect) {
+        HomeUiEffect.ShowToast -> {
+            snackbarHostState.showSnackbar(message = "GetInfo succeed!")
+        }
+    }
 }
 
 @Composable
@@ -57,31 +72,24 @@ private fun ScreenContent(
     Box(modifier = modifier.fillMaxSize()) {
         Greeting(
             name = state.info,
-            modifier = Modifier.align(Alignment.Center)
+            modifier = Modifier.align(Alignment.Center),
         )
         Button(
             onClick = { dispatch(HomeUiAction.GetInfo) },
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(bottom = 64.dp)
+                .padding(bottom = 64.dp),
         ) {
             Text("Get Info")
         }
     }
 }
 
+@Preview(showBackground = true)
 @Composable
-private fun UiEffects(viewModel: HomeViewModel, snackbarHostState: SnackbarHostState) {
-    val lifecycle = LocalLifecycleOwner.current.lifecycle
-    LaunchedEffect(viewModel) {
-        viewModel.uiEvent.flowWithLifecycle(lifecycle).collect {
-            when(it) {
-                HomeUiEffect.ShowToast -> launch {
-                    snackbarHostState.showSnackbar(
-                        message = "GetInfo succeed!"
-                    )
-                }
-            }
-        }
-    }
+private fun ScreenContentPreview() {
+    ScreenContent(
+        state = HomeUiState(info = "Preview Content"),
+        dispatch = {},
+    )
 }

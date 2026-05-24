@@ -1,0 +1,16 @@
+#!/bin/sh
+
+echo "🚀 Running pre-push checks..."
+
+./gradlew detekt ktlintCheck lintDebug testDebugUnitTest
+
+STATUS=$?
+
+if [ $STATUS -ne 0 ]; then
+  echo "❌ Pre-push checks failed!"
+  exit 1
+fi
+
+echo "✅ Pre-push checks passed!"
+
+exit 0

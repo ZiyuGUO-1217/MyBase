@@ -1,6 +1,7 @@
 package com.kaku.ui.screen.restful
 
 import androidx.lifecycle.viewModelScope
+import com.kaku.domain.error.DomainError
 import com.kaku.domain.model.RestfulObjectData
 import com.kaku.domain.repositories.RestfulRepository
 import com.kaku.ui.common.MviViewModel
@@ -8,19 +9,15 @@ import com.kaku.ui.common.UiAction
 import com.kaku.ui.common.UiEffect
 import com.kaku.ui.common.UiState
 import com.kaku.ui.common.UiStates
-import com.kaku.ui.common.suspendRunCatching
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.launch
 
 @HiltViewModel
 class RestfulViewModel @Inject constructor(
-    private val repository: RestfulRepository
+    private val repository: RestfulRepository,
 ) : MviViewModel<RestfulUiState, RestfulUiAction, RestfulUiEffect>() {
-
-    override fun configInitUiState(): RestfulUiState {
-        return RestfulUiState()
-    }
+    override fun configInitUiState(): RestfulUiState = RestfulUiState()
 
     override fun dispatch(action: RestfulUiAction) {
         when (action) {
@@ -31,16 +28,17 @@ class RestfulViewModel @Inject constructor(
     private fun loadData() {
         updateUiState { copy(items = UiStates.Loading) }
         viewModelScope.launch {
-            suspendRunCatching { repository.getAllItems() }
+            repository.getAllItems()
                 .onSuccess { items ->
                     updateUiState { copy(items = UiStates.Success(items)) }
-                }
-                .onFailure { error ->
-                    // Handle error, e.g., send a UiEffect to show an error message
-                    updateUiState { copy(items = UiStates.Error()) }
+                }.onFailure { error ->
+                    updateUiState { copy(items = UiStates.Error(error.toUiError())) }
                 }
         }
     }
+
+    private fun Throwable.toUiError(): DomainError =
+        this as? DomainError ?: DomainError.Unknown(this)
 }
 
 data class RestfulUiState(

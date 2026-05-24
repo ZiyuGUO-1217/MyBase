@@ -14,6 +14,9 @@
     <issue id="RtlHardcoded" severity="warning" />
     <issue id="KeyboardInaccessibleWidget" severity="warning" />
 
+    <!-- Keep CI stable when hosted runners install a newer Android SDK before the project intentionally retargets. -->
+    <issue id="OldTargetApi" severity="ignore" />
+
     <!-- Disable dependency version checks in CI; they require remote metadata and are not code-quality failures. -->
     <issue id="AndroidGradlePluginVersion" severity="ignore" />
     <issue id="GradleDependency" severity="ignore" />

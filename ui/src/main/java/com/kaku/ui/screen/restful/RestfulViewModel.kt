@@ -1,6 +1,7 @@
 package com.kaku.ui.screen.restful
 
 import androidx.lifecycle.viewModelScope
+import com.kaku.domain.error.DomainError
 import com.kaku.domain.model.RestfulObjectData
 import com.kaku.domain.repositories.RestfulRepository
 import com.kaku.ui.common.MviViewModel
@@ -31,11 +32,13 @@ class RestfulViewModel @Inject constructor(
                 .onSuccess { items ->
                     updateUiState { copy(items = UiStates.Success(items)) }
                 }.onFailure { error ->
-                    // Handle error, e.g., send a UiEffect to show an error message
-                    updateUiState { copy(items = UiStates.Error()) }
+                    updateUiState { copy(items = UiStates.Error(error.toUiError())) }
                 }
         }
     }
+
+    private fun Throwable.toUiError(): DomainError =
+        this as? DomainError ?: DomainError.Unknown(this)
 }
 
 data class RestfulUiState(

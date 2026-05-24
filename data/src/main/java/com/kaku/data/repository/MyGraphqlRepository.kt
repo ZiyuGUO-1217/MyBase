@@ -2,6 +2,7 @@ package com.kaku.data.repository
 
 import com.kaku.data.datasource.RemoteGraphQLDataSource
 import com.kaku.data.mapper.GraphqlDataMapper
+import com.kaku.data.mapper.mapCatchingToDomainError
 import com.kaku.domain.model.FilmObjectData
 import com.kaku.domain.repositories.GraphqlRepository
 import javax.inject.Inject
@@ -11,7 +12,7 @@ class MyGraphqlRepository @Inject constructor(
 ) : GraphqlRepository {
     override suspend fun getAllFilms(): Result<List<FilmObjectData>> {
         return dataSource.queryAllFilms()
-            .mapCatching {
+            .mapCatchingToDomainError {
                 GraphqlDataMapper.toFilmObjectData(it.allFilms)
             }
     }

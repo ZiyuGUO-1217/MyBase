@@ -1,6 +1,7 @@
 package com.kaku.ui.screen.graphql
 
 import app.cash.turbine.test
+import com.kaku.domain.error.DomainError
 import com.kaku.domain.model.FilmObjectData
 import com.kaku.domain.repositories.GraphqlRepository
 import com.kaku.test.common.StandardDispatcherRule
@@ -50,7 +51,8 @@ class GraphqlViewModelTest {
 
     @Test
     fun `loadData failure updates state to Error`() = runTest {
-        coEvery { repository.getAllFilms() } returns Result.failure(Exception("Network error"))
+        val error = DomainError.Network()
+        coEvery { repository.getAllFilms() } returns Result.failure(error)
 
         viewModel.uiState.test {
             awaitItem() // Initial state
@@ -58,7 +60,8 @@ class GraphqlViewModelTest {
             viewModel.dispatch(GraphqlUiAction.LoadData)
 
             awaitItem().films shouldBe UiStates.Loading
-            awaitItem().films.shouldBeInstanceOf<UiStates.Error>()
+            val errorState = awaitItem().films.shouldBeInstanceOf<UiStates.Error>()
+            errorState.error shouldBe error
         }
     }
 }

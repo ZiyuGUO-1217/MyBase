@@ -1,6 +1,7 @@
 package com.kaku.ui.screen.graphql
 
 import androidx.lifecycle.viewModelScope
+import com.kaku.domain.error.DomainError
 import com.kaku.domain.model.FilmObjectData
 import com.kaku.domain.repositories.GraphqlRepository
 import com.kaku.ui.common.MviViewModel
@@ -31,11 +32,13 @@ class GraphqlViewModel @Inject constructor(
                 .onSuccess { films ->
                     updateUiState { copy(films = UiStates.Success(films)) }
                 }.onFailure { error ->
-                    // Handle error, e.g., send a UiEffect to show an error message
-                    updateUiState { copy(films = UiStates.Error()) }
+                    updateUiState { copy(films = UiStates.Error(error.toUiError())) }
                 }
         }
     }
+
+    private fun Throwable.toUiError(): DomainError =
+        this as? DomainError ?: DomainError.Unknown(this)
 }
 
 data class GraphqlUiState(

@@ -1,6 +1,7 @@
 package com.kaku.ui.screen.restful
 
 import app.cash.turbine.test
+import com.kaku.domain.error.DomainError
 import com.kaku.domain.model.RestfulObjectData
 import com.kaku.domain.repositories.RestfulRepository
 import com.kaku.test.common.StandardDispatcherRule
@@ -45,7 +46,8 @@ class RestfulViewModelTest {
 
     @Test
     fun `loadData failure updates state to Error`() = runTest {
-        coEvery { repository.getAllItems() } returns Result.failure(Exception("Network error"))
+        val error = DomainError.Network()
+        coEvery { repository.getAllItems() } returns Result.failure(error)
 
         viewModel.uiState.test {
             awaitItem() // Initial state
@@ -53,7 +55,8 @@ class RestfulViewModelTest {
             viewModel.dispatch(RestfulUiAction.LoadData)
 
             awaitItem().items shouldBe UiStates.Loading
-            awaitItem().items.shouldBeInstanceOf<UiStates.Error>()
+            val errorState = awaitItem().items.shouldBeInstanceOf<UiStates.Error>()
+            errorState.error shouldBe error
         }
     }
 }

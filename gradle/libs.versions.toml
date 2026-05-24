@@ -60,6 +60,7 @@ kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 detekt-formatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }
 detekt-compose = { group = "io.nlopez.compose.rules", name = "detekt", version.ref = "composeRules" }
 ktlint-compose = { group = "io.nlopez.compose.rules", name = "ktlint", version.ref = "composeRules" }
+coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
 
 # Test Libraries
 junit = { group = "junit", name = "junit", version.ref = "junit" }

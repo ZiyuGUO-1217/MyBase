@@ -4,6 +4,7 @@ import com.apollographql.apollo.ApolloCall
 import com.apollographql.apollo.api.Query
 import com.apollographql.apollo.exception.ApolloException
 import okio.IOException
+import kotlin.coroutines.cancellation.CancellationException
 
 @Suppress("TooGenericExceptionCaught")
 suspend inline fun <D : Query.Data> callGraphql(
@@ -23,6 +24,8 @@ suspend inline fun <D : Query.Data> callGraphql(
             Result.failure(IOException("GraphQL call returned no data and no errors"))
         }
     }
+} catch (cancellationException: CancellationException) {
+    throw cancellationException
 } catch (e: ApolloException) {
     Result.failure(e)
 } catch (e: Exception) {
